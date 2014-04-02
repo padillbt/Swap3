@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -54,6 +55,7 @@ public class Config extends javax.swing.JFrame {
 	private int numSelected = 0;
 	@SuppressWarnings("rawtypes")
 	private DefaultListModel[] models;
+	private Locale locale;
 
 	/**
 	 * Used to edit days.
@@ -61,12 +63,13 @@ public class Config extends javax.swing.JFrame {
 	 * @param days
 	 */
 	@SuppressWarnings("unchecked")
-	public Config(ArrayList<Day> days) {
+	public Config(ArrayList<Day> days, Locale locale) {
 		this.models = new DefaultListModel[7];
 		for(int x = 0; x < 7; x ++)
 		{
 		this.models[x] = new DefaultListModel<String>();
 		}
+		this.locale = locale;
 		initDyn();
 		initComponents();
 
@@ -126,12 +129,25 @@ public class Config extends javax.swing.JFrame {
 	/**
 	 * Creates new form.
 	 */
+	public Config(Locale locale) {
+		this.models = new DefaultListModel[7];
+		for(int x = 0; x < 7; x ++)
+		{
+		this.models[x] = new DefaultListModel<String>();
+		}
+		this.locale = locale;
+		initDyn();
+
+		initComponents();
+	}
+	
 	public Config() {
 		this.models = new DefaultListModel[7];
 		for(int x = 0; x < 7; x ++)
 		{
 		this.models[x] = new DefaultListModel<String>();
 		}
+		this.locale = Main.getLocale();
 		initDyn();
 
 		initComponents();
@@ -680,7 +696,7 @@ public class Config extends javax.swing.JFrame {
 			}
 			if (hasJobs) {
 				Main.setDays(days);
-				Main.wSet = new WorkerSetup();
+				Main.wSet = new WorkerSetup(this.locale);
 				Main.toggleWorkerSetup();
 				Main.config = this;
 				Main.toggleConfig();
@@ -740,6 +756,7 @@ public class Config extends javax.swing.JFrame {
 			}
 		});
 	}
+	
 
 	private javax.swing.JScrollPane sundayScrollPane;
 	private javax.swing.JButton sundayAddJob;

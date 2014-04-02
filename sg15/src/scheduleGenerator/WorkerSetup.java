@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.*;
 
@@ -32,15 +33,17 @@ public class WorkerSetup extends javax.swing.JFrame {
 
 	private ArrayList<Day> days;
 	private ArrayList<WorkerTab> workerTabs;
+	private Locale locale;
 
 	/**
 	 * Allows for editing of already made workers.
 	 * 
 	 * @param workers
 	 */
-	public WorkerSetup(ArrayList<Worker> workers) {
+	public WorkerSetup(ArrayList<Worker> workers, Locale locale) {
 		this.setPreferredSize(new Dimension(425, 450));
 		this.workerTabs = new ArrayList<WorkerTab>();
+		this.locale = locale;
 		initComponents();
 		for (int c = 0; c < workers.size(); c++) {
 			this.addWorker(workers.get(c));
@@ -51,9 +54,10 @@ public class WorkerSetup extends javax.swing.JFrame {
 	/**
 	 * Creates new form WorkerSetup
 	 */
-	public WorkerSetup() {
+	public WorkerSetup(Locale locale) {
 		this.setPreferredSize(new Dimension(425, 450));
 		this.workerTabs = new ArrayList<WorkerTab>();
+		this.locale = locale;
 		initComponents();
 		addWorker(new Worker("",new ArrayList<Day>()));
 	}
@@ -242,7 +246,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 			Main.setWorkers(workers);
 			Main.setSchedule(new Schedule(Main.getDays(), Main.getWorkers()));
 			Main.dumpConfigFile(Main.path);
-			Main.cal = new CalendarGUI(Main.getSchedule());
+			Main.cal = new CalendarGUI(Main.getSchedule(), this.locale);
 			Main.toggleCalendar();
 			Main.toggleWorkerSetup();
 		}

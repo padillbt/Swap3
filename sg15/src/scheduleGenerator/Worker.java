@@ -22,6 +22,14 @@ import javax.swing.JViewport;
 //I disagree with this just being a data class. We can see that it stores the information on a worker working and days that it worked,
 //But it also contains methods for accessing and manipulating this data.
 
+//SWAP 3, TEAM 6  
+// ENHANCEMENT FROM REFACTORING
+// 1. The refactoring allowed new functionality off the new method they created to fix the Data Class smell. 
+// 2. The refactoring was successful in enabling us to display how much each worker has worked without having to calculate it on the fly. We were quickly able to add a menu
+//		option on CalendarGui under the Generate menu item.
+// 3. It adds to the value of the system by letting the user quickly see how many hours a worker has been signed up for and thus making changes if a worker has too many hours.
+//
+
 //However, we pull functionality from Schedule to make this less of a data class as possible
 //Pulled getting the worker tabs for worker setup here. Makes more sense to prep the panel where the data is.
 /**

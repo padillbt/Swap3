@@ -10,6 +10,13 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+import java.util.Locale;
+
+//SWAP 3, TEAM 6  
+// In order for the changes to function properly, whoever runs the code is required to have jdk 1.7. A popup will occur to warn you have a different version, but
+// the code will still function properly.
 
 /**
  * This class handles the interaction of one frame to another as well as
@@ -21,7 +28,9 @@ public class Main {
 
 	private static ArrayList<Day> days;
 	private static ArrayList<Worker> workers;
+	private String language = "English";
 	public static File path = new File("schedule_data.ser");
+	
 	
 	/**
 	 * Configures days.
@@ -36,6 +45,12 @@ public class Main {
 	 */
 	static CalendarGUI cal;
 	private static Schedule schedule;
+	
+	private static Locale locale;
+	
+	private static Locale localeSpanish = new Locale("es", "MX");
+	
+	private static Locale localeEnglish = new Locale("en", "US");
 
 	/**
 	 * Program starts here.
@@ -57,15 +72,36 @@ public class Main {
 		
 		fc.showOpenDialog(cal);
 		
+		Object[] possibleValues = { "English", "Spanish"};
+		Object selectedValue = JOptionPane.showInputDialog(null,
+		"", "Select a Language",
+		JOptionPane.QUESTION_MESSAGE, null,
+		possibleValues, possibleValues[0]);
+		
+		String answer = (String) selectedValue;
+		
+		
+		
+		if(answer == "Spanish"){
+			locale = getSpanishLocale();
+		}
+		else{
+			locale = getEnglishLocale();
+		}
+		
 		path = fc.getSelectedFile();
-		config = new Config();
+		config = new Config(locale);
+		
+		
+		
+		
 		
 		//Code to open the config file.
 		
 		try {
 			recallConfigFile();
 			if(getSchedule() != (null)){
-				cal = new CalendarGUI(getSchedule());
+				cal = new CalendarGUI(getSchedule(), locale);
 				//config.setVisible(true);
 				cal.setVisible(true);
 			} else{
@@ -77,6 +113,11 @@ public class Main {
 		}
 	}
 
+	public static Locale getLocale() {
+		return null;
+		
+	}
+	
 	/**
 	 * Changes visible of config.
 	 * 
@@ -110,6 +151,15 @@ public class Main {
 	 */
 	public static Schedule getSchedule() {
 		return Main.schedule;
+	}
+	
+	
+	public static Locale getSpanishLocale() {
+		return Main.localeSpanish;
+	}
+	
+	public static Locale getEnglishLocale() {
+		return Main.localeEnglish;
 	}
 
 	/**

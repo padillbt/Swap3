@@ -13,7 +13,10 @@ import java.util.TreeMap;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import java.util.Locale;
 
 /**
  * 
@@ -30,13 +33,25 @@ public class CalendarGUI extends javax.swing.JFrame {
 	private int earliestYear, earliestMonth, earliestDay;
 	private int monthsAhead = 0;
 	private int yearsAhead = 0;
+	private DateFormatSymbols dfs;
+	private Locale locale;
 
+	//SWAP 3, TEAM 6  
+	// ENHANCEMENT FROM REFACTORING
+	// 1. The refactoring for getting the name of the day and month enabled internationalization for CalendarGUI. 
+	// 2. The refactoring was successful in enabling this enhancement because it allowed us to pass a Locale, which would then generate the appropriate string.
+	// 3. It adds to the value of the system because it no longer restricts the possible users to English speakers only.
+	//
+	// Note: We only added internationalization to this particular class because this particular refactor enabled it. For full internationalization changes must be made to the other
+	// 		 classes as well. To see the effects of internationalization you must be on the main screen that depicts the calendar.	
+	//
+	
 	/**
 	 * Creates new form Calendar
 	 * 
 	 * @param schd
 	 */
-	public CalendarGUI(Schedule schd) {
+	public CalendarGUI(Schedule schd, Locale locale) {
 		this.schedule = schd;
 		this.scheduleMap = this.schedule.getSchedule();
 		String[] earliest = this.scheduleMap.firstKey().split("/");
@@ -44,6 +59,8 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.earliestMonth = Integer.parseInt(earliest[1]);
 		this.earliestDay = Integer.parseInt(earliest[2]);
 		this.cal = new GregorianCalendar();
+		this.locale = locale;
+		this.dfs  = DateFormatSymbols.getInstance(this.locale);
 		initComponents();
 		this.fillTableForThisMonth();
 	}
@@ -55,8 +72,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		// QUALITY CHANGES
 		// Used the built in Java library instead of a giant switch statement.
 		
-		DateFormatSymbols dfs = new DateFormatSymbols();
-		String[] months = dfs.getMonths();
+		String[] months = this.dfs.getMonths();
 		String month = months[n - 1];
 		
 		this.monthTitle.setText(month + " " + year);
@@ -318,9 +334,8 @@ public class CalendarGUI extends javax.swing.JFrame {
 		// QUALITY CHANGES
 		// Used the built in Java library instead of a giant switch statement.
 		
-		DateFormatSymbols dfs = new DateFormatSymbols();
-		String[] days = dfs.getWeekdays();
-		String day = days[n - 1];
+		String[] days = this.dfs.getWeekdays();
+		String day = days[n];
 		
 		return day;
 	}
@@ -343,6 +358,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.generateMenu = new javax.swing.JMenu();
 		this.genHtml = new javax.swing.JMenuItem();
 		this.generateText = new javax.swing.JMenuItem();
+		this.generateWorkerLog = new javax.swing.JMenuItem();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Calendar");
@@ -471,6 +487,16 @@ public class CalendarGUI extends javax.swing.JFrame {
 				});
 		this.generateMenu.add(this.generateText);
 
+		this.generateWorkerLog.setText("Generate Worker Log");
+		this.generateWorkerLog.addActionListener(new java.awt.event.ActionListener() {
+					
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						genWorkerLogActionPerformed(evt);
+					}
+				});
+		
+		this.generateMenu.add(this.generateWorkerLog);
+		
 		this.menuBar.add(this.generateMenu);
 
 		setJMenuBar(this.menuBar);
@@ -532,7 +558,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 * @param evt
 	 */
 	private void editWorkersActionPerformed(java.awt.event.ActionEvent evt) {
-		Main.wSet = new WorkerSetup(this.schedule.getWorkers());
+		Main.wSet = new WorkerSetup(this.schedule.getWorkers(), this.locale);
 		Main.toggleWorkerSetup();
 		Main.toggleCalendar();
 	}
@@ -541,7 +567,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 * @param evt
 	 */
 	private void editDaysActionPerformed(java.awt.event.ActionEvent evt) {
-		Main.config = new Config(Main.getDays());
+		Main.config = new Config(Main.getDays(), this.locale);
 		Main.toggleConfig();
 		Main.toggleCalendar();
 	}
@@ -565,6 +591,22 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 */
 	private void genHtmlActionPerformed(java.awt.event.ActionEvent evt) {
 		HTMLGenerator.writeHtml();
+	}
+	
+	private void genWorkerLogActionPerformed(java.awt.event.ActionEvent evt) {
+		ArrayList<Worker> workers = this.schedule.getWorkers();
+		
+		String workerLog = "";
+		
+		for (Worker w : workers) {
+			workerLog += w.getName() + ": " + w.getTotalWorkedCount() + " hour(s) worked \n\n"; 
+		}
+		
+		
+		JOptionPane.showMessageDialog(null,
+			    workerLog,
+			    "Worker Log",
+			    JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
@@ -678,6 +720,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	private javax.swing.JMenuItem genHtml;
 	private javax.swing.JMenu generateMenu;
 	private javax.swing.JMenuItem generateText;
+	private javax.swing.JMenuItem generateWorkerLog;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JMenuBar menuBar;
 	private javax.swing.JLabel monthTitle;
