@@ -19,7 +19,7 @@ import java.util.Locale;
 // NOTE:
 // You can only choose the language when creating a new .ser file. Once a language has been chosen, 
 // you cannot choose a different language. This is due to how the data is saved. To create a new file,
-// delete the .ser file and choose "cancel" when asked to choose a file.
+// choose "cancel" when asked to choose a file.
 
 /**
  * This class handles the interaction of one frame to another as well as
@@ -68,13 +68,18 @@ public class Main {
 
 		JFileChooser fc = new JFileChooser();
 		fc.setCurrentDirectory(new java.io.File("."));
-		fc.setDialogTitle("Set Schedule Data File");
+		fc.setDialogTitle("Set Schedule Data File. Click 'Cancel' to Create New File");
 		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		fc.setAcceptAllFileFilterUsed(false);
 
 		fc.showOpenDialog(cal);
 		if (fc.getSelectedFile() == null) {
 			path = new File("new_schedule_data.ser");
+			if (path.exists()) {
+				path.delete();
+				path = new File("new_schedule_data.ser");
+			}
+			
 		} else {
 			path = fc.getSelectedFile();
 		}
