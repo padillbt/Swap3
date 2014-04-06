@@ -107,20 +107,25 @@ public class WorkerTab extends JPanel {
 	private void setupWorkerTabLayout(JTabbedPane workerDays) {
 		javax.swing.JTextField tempWorkerName = new javax.swing.JTextField();
 		JLabel workerNameLabel = new JLabel("Worker's Name:");
+		
+		javax.swing.JTextField tempWorkerComment = new javax.swing.JTextField();
+		JLabel workerCommentLabel = new JLabel("Additional Comments:");
+		
 
 		javax.swing.GroupLayout workerTab1Layout = new javax.swing.GroupLayout(
 						this);
 		this.setLayout(workerTab1Layout);
 				
-		setGroupLayoutHorizontalForWorker(workerTab1Layout, workerNameLabel, tempWorkerName,workerDays);
-		setGroupLayoutVerticalForWorker(workerTab1Layout, workerNameLabel, tempWorkerName,workerDays);
+		setGroupLayoutHorizontalForWorker(workerTab1Layout, workerNameLabel, tempWorkerName, workerCommentLabel, tempWorkerComment, workerDays);
+		setGroupLayoutVerticalForWorker(workerTab1Layout, workerNameLabel, tempWorkerName, workerCommentLabel, tempWorkerComment, workerDays);
 	}
 	
 	
 	
 	
 
-	private void setGroupLayoutHorizontalForWorker(GroupLayout layout, JLabel workerNameLabel, JTextField tempWorkerName, JTabbedPane tempWorkerDays) {
+	private void setGroupLayoutHorizontalForWorker(GroupLayout layout, JLabel workerNameLabel, JTextField tempWorkerName, JLabel workerCommentLabel, 
+													JTextField tempWorkerComment, JTabbedPane tempWorkerDays) {
 		layout
 		.setHorizontalGroup(layout
 				.createParallelGroup(
@@ -153,11 +158,46 @@ public class WorkerTab extends JPanel {
 																		javax.swing.GroupLayout.PREFERRED_SIZE)
 																.addGap(49,
 																		49,
-																		49)))
-								.addContainerGap()));
+																		49))
+								)
+								.addContainerGap()
+								)
+				.addGroup(
+						layout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout
+												.createParallelGroup(
+														javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														tempWorkerDays)
+												.addGroup(
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														layout
+																.createSequentialGroup()
+																.addGap(0,
+																		0,
+																		Short.MAX_VALUE)
+																.addComponent(
+																		workerCommentLabel)
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																.addComponent(
+																		tempWorkerComment,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
+																		150,
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
+																.addGap(49,
+																		49,
+																		49))
+								)
+								.addContainerGap()
+								));
 	}
 	
-	private void setGroupLayoutVerticalForWorker(GroupLayout layout,JLabel workerNameLabel, JTextField tempWorkerName, JTabbedPane tempWorkerDays) {
+	private void setGroupLayoutVerticalForWorker(GroupLayout layout,JLabel workerNameLabel, JTextField tempWorkerName, JLabel workerCommentLabel, 
+			JTextField tempWorkerComment, JTabbedPane tempWorkerDays) {
 		layout
 		.setVerticalGroup(layout
 				.createParallelGroup(
@@ -176,7 +216,22 @@ public class WorkerTab extends JPanel {
 														tempWorkerName,
 														javax.swing.GroupLayout.PREFERRED_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												)
+								
+								.addGroup(
+										layout
+												.createParallelGroup(
+														javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(
+														workerCommentLabel)
+												.addComponent(
+														tempWorkerComment,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)		
+												)
+											
 								.addPreferredGap(
 										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(

@@ -73,6 +73,16 @@ public class WorkerSetup extends javax.swing.JFrame {
 	// No Feature Mentioned that could be added. It is difficult to mention features when extracting code from a class.
 	//I think the refactoring was quite successful. The functions are now much easier to read and contain a good focus.
 	//Many of these functions were moved to WorkerTab in response to the divergent change response.
+	
+	//SWAP 3, TEAM 6  
+	// ENHANCEMENT FROM REFACTORING
+	// 1. The refactoring of adding WorkerTab enabled easy editing of GUI components.
+	// 2. The refactoring was successful in enabling this enhancement because it allowed us to add additional GUI compenets to allow users to 
+	// input additonal comments about the workers.
+	// 3. It adds to the value of the system because it allows users to communicate more effectively by adding comments that refer to requests or constraints of
+	// their work conditions.
+	//
+	
 	private void addWorker(Worker w) {
 		WorkerTab tab = w.getWorkerTab();
 		this.workerTabs.add(tab);
@@ -213,6 +223,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 		for (JPanel tab : this.workerTabs) {
 			ArrayList<Day> workerDays = new ArrayList<Day>();
 			JTextField nameArea = (JTextField) tab.getComponent(2);
+			JTextField commentArea = (JTextField) tab.getComponent(4);
 			if (nameArea.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(this,
 						"You have not entered a name for every worker.");
@@ -239,7 +250,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 				}
 				workerDays.add(new Day(daysPane.getTitleAt(i), jobNames));
 			}
-			workers.add(new Worker(nameArea.getText(), workerDays));
+			workers.add(new Worker(nameArea.getText(), workerDays, commentArea.getText()));
 		}
 		if (allGood) {
 			HTMLGenerator.reset();

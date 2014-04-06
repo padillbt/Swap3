@@ -56,6 +56,7 @@ public class Config extends javax.swing.JFrame {
 	@SuppressWarnings("rawtypes")
 	private DefaultListModel[] models;
 	private Locale locale;
+	private DateFormatSymbols dfs;
 
 	/**
 	 * Used to edit days.
@@ -70,6 +71,7 @@ public class Config extends javax.swing.JFrame {
 		this.models[x] = new DefaultListModel<String>();
 		}
 		this.locale = locale;
+		this.dfs = new DateFormatSymbols().getInstance(Main.getLocale());
 		initDyn();
 		initComponents();
 
@@ -136,6 +138,7 @@ public class Config extends javax.swing.JFrame {
 		this.models[x] = new DefaultListModel<String>();
 		}
 		this.locale = locale;
+		this.dfs = new DateFormatSymbols().getInstance(Main.getLocale());
 		initDyn();
 
 		initComponents();
@@ -148,6 +151,7 @@ public class Config extends javax.swing.JFrame {
 		this.models[x] = new DefaultListModel<String>();
 		}
 		this.locale = Main.getLocale();
+		this.dfs = new DateFormatSymbols().getInstance(Main.getLocale());
 		initDyn();
 
 		initComponents();
@@ -239,7 +243,7 @@ public class Config extends javax.swing.JFrame {
 		setPreferredSize(new java.awt.Dimension(801, 87));
 		setResizable(false);
 
-		this.sundayCheck.setText("Sunday");
+		this.sundayCheck.setText(dfs.getWeekdays()[1]);
 		this.sundayCheck.setName("sundayCheck"); // NOI18N
 		this.sundayCheck.addActionListener(new java.awt.event.ActionListener() {
 			
@@ -248,7 +252,7 @@ public class Config extends javax.swing.JFrame {
 			}
 		});
 
-		this.wednesdayCheck.setText("Wednesday");
+		this.wednesdayCheck.setText(dfs.getWeekdays()[4]);
 		this.wednesdayCheck.setName("wednesdayCheck"); // NOI18N
 		this.wednesdayCheck
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -258,7 +262,7 @@ public class Config extends javax.swing.JFrame {
 					}
 				});
 
-		this.mondayCheck.setText("Monday");
+		this.mondayCheck.setText(dfs.getWeekdays()[2]);
 		this.mondayCheck.setName("mondayCheck"); // NOI18N
 		this.mondayCheck.addActionListener(new java.awt.event.ActionListener() {
 			
@@ -267,7 +271,7 @@ public class Config extends javax.swing.JFrame {
 			}
 		});
 
-		this.tuesdayCheck.setText("Tuesday");
+		this.tuesdayCheck.setText(dfs.getWeekdays()[3]);
 		this.tuesdayCheck.setName("tuesdayCheck"); // NOI18N
 		this.tuesdayCheck
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -280,7 +284,7 @@ public class Config extends javax.swing.JFrame {
 		this.jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 		this.jLabel1.setText("Days:");
 
-		this.thursdayCheck.setText("Thursday");
+		this.thursdayCheck.setText(dfs.getWeekdays()[5]);
 		this.thursdayCheck.setName("thursdayCheck"); // NOI18N
 		this.thursdayCheck
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -290,7 +294,7 @@ public class Config extends javax.swing.JFrame {
 					}
 				});
 
-		this.fridayCheck.setText("Friday");
+		this.fridayCheck.setText(dfs.getWeekdays()[6]);
 		this.fridayCheck.setName("fridayCheck"); // NOI18N
 		this.fridayCheck.addActionListener(new java.awt.event.ActionListener() {
 			
@@ -299,7 +303,7 @@ public class Config extends javax.swing.JFrame {
 			}
 		});
 
-		this.saturdayCheck.setText("Saturday");
+		this.saturdayCheck.setText(dfs.getWeekdays()[7]);
 		this.saturdayCheck.setName("saturdayCheck"); // NOI18N
 		this.saturdayCheck
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -494,7 +498,7 @@ public class Config extends javax.swing.JFrame {
 			this.sundayJobList.setModel(this.models[0]);
 			sundayTab.DayPanelSet(models, this, sundayJobList, sundayJobName, sundayLabel, sundayAddJob, sundayDeleteJob, sundayScrollPane);
 			sundayTab.setUp(0);
-			this.dayTabs.addTab("Sunday", this.sundayTab);
+			this.dayTabs.addTab(dfs.getWeekdays()[1], this.sundayTab);
 		} else {
 			this.numSelected--;
 			stretch();
@@ -515,7 +519,7 @@ public class Config extends javax.swing.JFrame {
 			this.mondayJobList.setModel(this.models[1]);
 			mondayTab.DayPanelSet(models, this, mondayJobList, mondayJobName, mondayLabel, mondayAddJob, mondayDeleteJob, mondayScrollPane);
 			mondayTab.setUp(1);
-			this.dayTabs.addTab("Monday", this.mondayTab);
+			this.dayTabs.addTab(dfs.getWeekdays()[2], this.mondayTab);
 		} else {
 			this.numSelected--;
 			stretch();
@@ -537,7 +541,7 @@ public class Config extends javax.swing.JFrame {
 			this.tuesdayJobList.setModel(this.models[2]);
 			tuesdayTab.DayPanelSet(models, this, tuesdayJobList, tuesdayJobName, tuesdayLabel, tuesdayAddJob, tuesdayDeleteJob, tuesdayScrollPane);
 			tuesdayTab.setUp(2);
-			this.dayTabs.addTab("Tuesday", this.tuesdayTab);
+			this.dayTabs.addTab(dfs.getWeekdays()[3], this.tuesdayTab);
 		} else {
 			this.numSelected--;
 			stretch();
@@ -559,7 +563,7 @@ public class Config extends javax.swing.JFrame {
 			wednesdayTab.DayPanelSet(models, this, wednesdayJobList, wednesdayJobName, wednesdayLabel, wednesdayAddJob, wednesdayDeleteJob, wednesdayScrollPane);
 			wednesdayTab.setUp(3);
 
-			this.dayTabs.addTab("Wednesday", this.wednesdayTab);
+			this.dayTabs.addTab(dfs.getWeekdays()[4], this.wednesdayTab);
 		} else {
 			this.numSelected--;
 			stretch();
@@ -582,7 +586,7 @@ public class Config extends javax.swing.JFrame {
 			thursdayTab.DayPanelSet(models, this, thursdayJobList, thursdayJobName, thursdayLabel, thursdayAddJob, thursdayDeleteJob, thursdayScrollPane);
 			thursdayTab.setUp(4);
 
-			this.dayTabs.addTab("Thursday", this.thursdayTab);
+			this.dayTabs.addTab(dfs.getWeekdays()[5], this.thursdayTab);
 		} else {
 			this.numSelected--;
 			stretch();
@@ -605,7 +609,7 @@ public class Config extends javax.swing.JFrame {
 			this.fridayJobList.setModel(this.models[5]);
 			fridayTab.DayPanelSet(models, this, fridayJobList, fridayJobName, fridayLabel, fridayAddJob, fridayDeleteJob, fridayScrollPane);
 			fridayTab.setUp(5);
-			this.dayTabs.addTab("Friday", this.fridayTab);
+			this.dayTabs.addTab(dfs.getWeekdays()[6], this.fridayTab);
 		} else {
 			this.numSelected--;
 			stretch();
@@ -628,7 +632,7 @@ public class Config extends javax.swing.JFrame {
 			saturdayTab.DayPanelSet(models, this, saturdayJobList, saturdayJobName, saturdayLabel, saturdayAddJob, saturdayDeleteJob, saturdayScrollPane);
 			saturdayTab.setUp(6);
 
-			this.dayTabs.addTab("Saturday", this.saturdayTab);
+			this.dayTabs.addTab(dfs.getWeekdays()[7], this.saturdayTab);
 		} else {
 			this.numSelected--;
 			stretch();
@@ -647,43 +651,43 @@ public class Config extends javax.swing.JFrame {
 			ArrayList<Object> sun = new ArrayList<Object>();
 			List<Object> jobs = Arrays.asList(this.models[0].toArray());
 			sun.addAll(jobs);
-			days.add(new Day("Sunday", sun));
+			days.add(new Day(dfs.getWeekdays()[1], sun));
 		}
 		if (this.mondayCheck.isSelected()) {
 			ArrayList<Object> mon = new ArrayList<Object>();
 			List<Object> jobs = Arrays.asList(this.models[1].toArray());
 			mon.addAll(jobs);
-			days.add(new Day("Monday", mon));
+			days.add(new Day(dfs.getWeekdays()[2], mon));
 		}
 		if (this.tuesdayCheck.isSelected()) {
 			ArrayList<Object> tue = new ArrayList<Object>();
 			List<Object> jobs = Arrays.asList(this.models[2].toArray());
 			tue.addAll(jobs);
-			days.add(new Day("Tuesday", tue));
+			days.add(new Day(dfs.getWeekdays()[3], tue));
 		}
 		if (this.wednesdayCheck.isSelected()) {
 			ArrayList<Object> wed = new ArrayList<Object>();
 			List<Object> jobs = Arrays.asList(this.models[3].toArray());
 			wed.addAll(jobs);
-			days.add(new Day("Wednesday", wed));
+			days.add(new Day(dfs.getWeekdays()[4], wed));
 		}
 		if (this.thursdayCheck.isSelected()) {
 			ArrayList<Object> thu = new ArrayList<Object>();
 			List<Object> jobs = Arrays.asList(this.models[4].toArray());
 			thu.addAll(jobs);
-			days.add(new Day("Thursday", thu));
+			days.add(new Day(dfs.getWeekdays()[5], thu));
 		}
 		if (this.fridayCheck.isSelected()) {
 			ArrayList<Object> fri = new ArrayList<Object>();
 			List<Object> jobs = Arrays.asList(this.models[5].toArray());
 			fri.addAll(jobs);
-			days.add(new Day("Friday", fri));
+			days.add(new Day(dfs.getWeekdays()[6], fri));
 		}
 		if (this.saturdayCheck.isSelected()) {
 			ArrayList<Object> sat = new ArrayList<Object>();
 			List<Object> jobs = Arrays.asList(this.models[6].toArray());
 			sat.addAll(jobs);
-			days.add(new Day("Saturday", sat));
+			days.add(new Day(dfs.getWeekdays()[7], sat));
 		}
 		if (days.size() > 0) {
 			boolean hasJobs = true;
@@ -752,7 +756,7 @@ public class Config extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			
 			public void run() {
-				new Config().setVisible(true);
+				new Config(Main.getLocale()).setVisible(true);
 			}
 		});
 	}

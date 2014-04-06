@@ -1,5 +1,6 @@
 package scheduleGenerator;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,9 +12,12 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.swing.CellEditor;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.util.Locale;
@@ -113,7 +117,8 @@ public class CalendarGUI extends javax.swing.JFrame {
 
 		DefaultTableModel table = new DefaultTableModel(new Object[0][0],
 				new String[0][0]);
-
+		
+		
 		this.cal = new GregorianCalendar(currentYear, this.currentMonth - 1, 1);
 
 		while (this.currentMonth == this.cal.get(Calendar.MONTH) + 1) {
@@ -149,6 +154,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 
 		HTMLGenerator.addMonth(this.monthName, table);
 		this.scheduleTable.setModel(table);
+		
 	}
 
 	/**
@@ -550,7 +556,6 @@ public class CalendarGUI extends javax.swing.JFrame {
 										javax.swing.GroupLayout.PREFERRED_SIZE,
 										265,
 										javax.swing.GroupLayout.PREFERRED_SIZE)));
-
 		pack();
 	}
 
@@ -567,7 +572,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 * @param evt
 	 */
 	private void editDaysActionPerformed(java.awt.event.ActionEvent evt) {
-		Main.config = new Config(Main.getDays(), this.locale);
+		Main.config = new Config(Main.getLocale());
 		Main.toggleConfig();
 		Main.toggleCalendar();
 	}
@@ -599,7 +604,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		String workerLog = "";
 		
 		for (Worker w : workers) {
-			workerLog += w.getName() + ": " + w.getTotalWorkedCount() + " hour(s) worked \n\n"; 
+			workerLog += w.getName() + ": " + w.getTotalWorkedCount() + " hour(s) worked \n"+ w.getComments() +"\n\n"; 
 		}
 		
 		

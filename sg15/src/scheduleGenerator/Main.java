@@ -71,6 +71,11 @@ public class Main {
 		fc.setAcceptAllFileFilterUsed(false);
 		
 		fc.showOpenDialog(cal);
+		if (fc.getSelectedFile() == null){
+			path = new File("new_schedule_data.ser");
+		} else{
+			path = fc.getSelectedFile();
+		}
 		
 		Object[] possibleValues = { "English", "Spanish"};
 		Object selectedValue = JOptionPane.showInputDialog(null,
@@ -89,7 +94,7 @@ public class Main {
 			locale = getEnglishLocale();
 		}
 		
-		path = fc.getSelectedFile();
+		
 		config = new Config(locale);
 		
 		
@@ -114,7 +119,7 @@ public class Main {
 	}
 
 	public static Locale getLocale() {
-		return null;
+		return locale;
 		
 	}
 	

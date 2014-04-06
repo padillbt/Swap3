@@ -23,6 +23,18 @@ import java.util.List;
  * multiple separate classes where it was being performed. This makes this less of a lazy class since
  * it now converts its own day of hte week.
  */
+
+//SWAP 3, TEAM 6  
+// ENHANCEMENT FROM REFACTORING
+// 1. The refactoring for getting the index of the day of the week enabled internationalization for Day.java. 
+// 2. The refactoring was successful in enabling this enhancement because it allowed us to pass a Locale, which would then generate 
+// the appropriate index for a localized name of day.
+// 3. It adds to the value of the system because it no longer restricts the possible users to English speakers only.
+//
+// Note: We only added internationalization to this particular class because this particular refactor enabled it. For full internationalization changes must be made to the other
+// 		 classes as well. To see the effects of internationalization you must be on the Config or Edit days screen.	
+//
+
 /**
  * Day is used to store jobs for a given day.
  *
@@ -87,7 +99,7 @@ public class Day implements Serializable{
 	}
 	
 	public int getIndexOfDay() {
-		DateFormatSymbols objDaySymbol = new DateFormatSymbols();
+		DateFormatSymbols objDaySymbol = new DateFormatSymbols().getInstance(Main.getLocale());
 		String[] symbolDayNames = objDaySymbol.getWeekdays();
 		List<String> dayList = Arrays.asList(symbolDayNames);
 		return dayList.indexOf(this.getNameOfDay()) - 1;

@@ -43,6 +43,7 @@ public class Worker implements Serializable{
 	private String name;
 	private ArrayList<Day> days = new ArrayList<Day>();
 	private HashMap<String, Integer> timesWorked;
+	private String comments;
 	
 	public static Worker EmptyWorker() {
 		return new Worker("Empty", new ArrayList<Day>());
@@ -64,6 +65,20 @@ public class Worker implements Serializable{
 				this.timesWorked.put(job, 0);
 			}
 		}
+		this.comments = "";
+	}
+	
+	public Worker(String name, ArrayList<Day> days, String comments)
+	{
+		this.name = name;
+		this.days = days;
+		this.timesWorked = new HashMap<String, Integer>();
+		for(Day day: days) {
+			for(String job:day.getJobs()) {
+				this.timesWorked.put(job, 0);
+			}
+		}
+		this.comments = comments;
 	}
 	
 	/**
@@ -150,10 +165,18 @@ public class Worker implements Serializable{
 		this.days.add(d);
 	}
 	
+	public String getComments(){
+		return this.comments;
+	}
+	
 	public WorkerTab getWorkerTab() {
 		WorkerTab t = new WorkerTab();
 		JTextField nameArea = (JTextField) t.getComponent(2);
 		nameArea.setText(this.getName());
+		
+		JTextField commentArea = (JTextField) t.getComponent(4);
+		commentArea.setText(this.comments);
+		
 		JTabbedPane daysPane = (JTabbedPane) t.getComponents()[0];
 		for (int i = 0; i < daysPane.getTabCount(); i++) {
 			for (int n = 0; n < this.getDays().size(); n++) {
