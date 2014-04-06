@@ -14,9 +14,12 @@ import javax.swing.JOptionPane;
 
 import java.util.Locale;
 
-//SWAP 3, TEAM 6  
-// In order for the changes to function properly, whoever runs the code is required to have jdk 1.7. A popup will occur to warn you have a different version, but
-// the code will still function properly.
+// SWAP 3, TEAM 6 
+// ENHANCEMENT FOR REFACTORING
+// NOTE:
+// You can only choose the language when creating a new .ser file. Once a language has been chosen, 
+// you cannot choose a different language. This is due to how the data is saved. To create a new file,
+// delete the .ser file and choose "cancel" when asked to choose a file.
 
 /**
  * This class handles the interaction of one frame to another as well as
@@ -28,10 +31,8 @@ public class Main {
 
 	private static ArrayList<Day> days;
 	private static ArrayList<Worker> workers;
-	private String language = "English";
 	public static File path = new File("schedule_data.ser");
-	
-	
+
 	/**
 	 * Configures days.
 	 */
@@ -45,11 +46,11 @@ public class Main {
 	 */
 	static CalendarGUI cal;
 	private static Schedule schedule;
-	
+
 	private static Locale locale;
-	
+
 	private static Locale localeSpanish = new Locale("es", "MX");
-	
+
 	private static Locale localeEnglish = new Locale("en", "US");
 
 	/**
@@ -58,71 +59,63 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
 		// SWAP 1 TEAM 03
 		// ADDITIONAL FEATURE
 		// Can choose which file to save schedule file to.
-		// Can be used to fix issue where a bad schedule file makes the program run out of memory.
-		
+		// Can be used to fix issue where a bad schedule file makes the program
+		// run out of memory.
+
 		JFileChooser fc = new JFileChooser();
 		fc.setCurrentDirectory(new java.io.File("."));
 		fc.setDialogTitle("Set Schedule Data File");
 		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		fc.setAcceptAllFileFilterUsed(false);
-		
+
 		fc.showOpenDialog(cal);
-		if (fc.getSelectedFile() == null){
+		if (fc.getSelectedFile() == null) {
 			path = new File("new_schedule_data.ser");
-		} else{
+		} else {
 			path = fc.getSelectedFile();
 		}
 		
-		Object[] possibleValues = { "English", "Spanish"};
-		Object selectedValue = JOptionPane.showInputDialog(null,
-		"", "Select a Language",
-		JOptionPane.QUESTION_MESSAGE, null,
-		possibleValues, possibleValues[0]);
-		
-		String answer = (String) selectedValue;
-		
-		
-		
-		if(answer == "Spanish"){
-			locale = getSpanishLocale();
-		}
-		else{
-			locale = getEnglishLocale();
-		}
-		
-		
+			Object[] possibleValues = { "English", "Spanish" };
+			Object selectedValue = JOptionPane.showInputDialog(null, "",
+					"Select a Language", JOptionPane.QUESTION_MESSAGE, null,
+					possibleValues, possibleValues[0]);
+
+			String answer = (String) selectedValue;
+
+			if (answer == "Spanish") {
+				locale = getSpanishLocale();
+			} else {
+				locale = getEnglishLocale();
+			}
+
 		config = new Config(locale);
-		
-		
-		
-		
-		
-		//Code to open the config file.
-		
+
+		// Code to open the config file.
+
 		try {
 			recallConfigFile();
-			if(getSchedule() != (null)){
+			if (getSchedule() != (null)) {
 				cal = new CalendarGUI(getSchedule(), locale);
-				//config.setVisible(true);
+				// config.setVisible(true);
 				cal.setVisible(true);
-			} else{
+			} else {
 				config.setVisible(true);
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			
+
 		}
 	}
 
 	public static Locale getLocale() {
 		return locale;
-		
+
 	}
-	
+
 	/**
 	 * Changes visible of config.
 	 * 
@@ -157,12 +150,11 @@ public class Main {
 	public static Schedule getSchedule() {
 		return Main.schedule;
 	}
-	
-	
+
 	public static Locale getSpanishLocale() {
 		return Main.localeSpanish;
 	}
-	
+
 	public static Locale getEnglishLocale() {
 		return Main.localeEnglish;
 	}
@@ -212,13 +204,13 @@ public class Main {
 	public static void setDays(ArrayList<Day> d) {
 		days = d;
 	}
-	
+
 	/**
 	 * Dumps data to the file schedule_data.ser.
-	 *
+	 * 
 	 */
-	public static void dumpConfigFile(File toWrite){
-		
+	public static void dumpConfigFile(File toWrite) {
+
 		try {
 			toWrite.delete();
 			toWrite.createNewFile();
@@ -230,7 +222,7 @@ public class Main {
 			fileStore.writeObject(HTMLGenerator.getTables());
 			fileStore.close();
 			dumpConfig.close();
-			
+
 			System.out.println("Stored");
 
 		} catch (FileNotFoundException exception) {
@@ -239,24 +231,25 @@ public class Main {
 			exception.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Recalls data from schedule_data.ser.
-	 *
+	 * 
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unchecked")
-	public static void recallConfigFile() throws ClassNotFoundException, IOException{
-		
-		if(path.exists()) {
+	public static void recallConfigFile() throws ClassNotFoundException,
+			IOException {
+
+		if (path.exists()) {
 			FileInputStream recallConfig = new FileInputStream(path);
 			ObjectInputStream fileRecall = new ObjectInputStream(recallConfig);
 			days = (ArrayList<Day>) fileRecall.readObject();
 			workers = (ArrayList<Worker>) fileRecall.readObject();
 			schedule = (Schedule) fileRecall.readObject();
-			HTMLGenerator.setTables((String)fileRecall.readObject());
-			
+			HTMLGenerator.setTables((String) fileRecall.readObject());
+
 			fileRecall.close();
 			recallConfig.close();
 		}

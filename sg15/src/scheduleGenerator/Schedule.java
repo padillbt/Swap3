@@ -66,7 +66,7 @@ public class Schedule extends Thread implements Serializable {
 	private void generateIndices() {
 		for (int i = 0; i < this.workers.size(); i++) {
 			for (Day day : this.workers.get(i).getDays()) {
-				int numDay = day.getIndexOfDay();
+				int numDay = day.getIndexOfDay()+1;
 				this.workerIndices.get(numDay).add(this.workers.get(i));
 			}
 		}
@@ -117,7 +117,7 @@ public class Schedule extends Thread implements Serializable {
 
 						ArrayList<Worker> workersForJob = new ArrayList<Worker>();
 
-						for (Worker worker : this.workerIndices.get(day.getIndexOfDay())) {
+						for (Worker worker : this.workerIndices.get(day.getIndexOfDay()+1)) {
 							
 							// SWAP 1, TEAM 03
 							

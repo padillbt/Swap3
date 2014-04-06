@@ -257,7 +257,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 			Main.setWorkers(workers);
 			Main.setSchedule(new Schedule(Main.getDays(), Main.getWorkers()));
 			Main.dumpConfigFile(Main.path);
-			Main.cal = new CalendarGUI(Main.getSchedule(), this.locale);
+			Main.cal = new CalendarGUI(Main.getSchedule(), Main.getLocale());
 			Main.toggleCalendar();
 			Main.toggleWorkerSetup();
 		}

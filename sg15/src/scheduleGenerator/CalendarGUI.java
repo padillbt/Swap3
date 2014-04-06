@@ -64,7 +64,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.earliestDay = Integer.parseInt(earliest[2]);
 		this.cal = new GregorianCalendar();
 		this.locale = locale;
-		this.dfs  = DateFormatSymbols.getInstance(this.locale);
+		this.dfs  = DateFormatSymbols.getInstance(Main.getLocale());
 		initComponents();
 		this.fillTableForThisMonth();
 	}
@@ -187,9 +187,9 @@ public class CalendarGUI extends javax.swing.JFrame {
 				}
 			}
 			if (currentKey.equals("")) {
-				Thread t = new Thread(this.schedule);
-				t.start();
-				//this.schedule.calculateNextMonth();
+//				Thread t = new Thread(this.schedule);
+//				t.start();
+				this.schedule.run();
 			}
 		}
 
@@ -563,7 +563,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 * @param evt
 	 */
 	private void editWorkersActionPerformed(java.awt.event.ActionEvent evt) {
-		Main.wSet = new WorkerSetup(this.schedule.getWorkers(), this.locale);
+		Main.wSet = new WorkerSetup(this.schedule.getWorkers(), Main.getLocale());
 		Main.toggleWorkerSetup();
 		Main.toggleCalendar();
 	}
@@ -572,7 +572,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 * @param evt
 	 */
 	private void editDaysActionPerformed(java.awt.event.ActionEvent evt) {
-		Main.config = new Config(Main.getLocale());
+		Main.config = new Config(Main.getDays(), Main.getLocale());
 		Main.toggleConfig();
 		Main.toggleCalendar();
 	}

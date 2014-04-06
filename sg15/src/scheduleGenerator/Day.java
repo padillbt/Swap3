@@ -99,7 +99,7 @@ public class Day implements Serializable{
 	}
 	
 	public int getIndexOfDay() {
-		DateFormatSymbols objDaySymbol = new DateFormatSymbols().getInstance(Main.getLocale());
+		DateFormatSymbols objDaySymbol = DateFormatSymbols.getInstance(Main.getLocale());
 		String[] symbolDayNames = objDaySymbol.getWeekdays();
 		List<String> dayList = Arrays.asList(symbolDayNames);
 		return dayList.indexOf(this.getNameOfDay()) - 1;

@@ -71,7 +71,7 @@ public class Config extends javax.swing.JFrame {
 		this.models[x] = new DefaultListModel<String>();
 		}
 		this.locale = locale;
-		this.dfs = new DateFormatSymbols().getInstance(Main.getLocale());
+		this.dfs  = DateFormatSymbols.getInstance(Main.getLocale());
 		initDyn();
 		initComponents();
 
@@ -138,7 +138,7 @@ public class Config extends javax.swing.JFrame {
 		this.models[x] = new DefaultListModel<String>();
 		}
 		this.locale = locale;
-		this.dfs = new DateFormatSymbols().getInstance(Main.getLocale());
+		this.dfs  = DateFormatSymbols.getInstance(Main.getLocale());
 		initDyn();
 
 		initComponents();
@@ -151,7 +151,7 @@ public class Config extends javax.swing.JFrame {
 		this.models[x] = new DefaultListModel<String>();
 		}
 		this.locale = Main.getLocale();
-		this.dfs = new DateFormatSymbols().getInstance(Main.getLocale());
+		this.dfs  = DateFormatSymbols.getInstance(Main.getLocale());
 		initDyn();
 
 		initComponents();
@@ -700,7 +700,7 @@ public class Config extends javax.swing.JFrame {
 			}
 			if (hasJobs) {
 				Main.setDays(days);
-				Main.wSet = new WorkerSetup(this.locale);
+				Main.wSet = new WorkerSetup(Main.getLocale());
 				Main.toggleWorkerSetup();
 				Main.config = this;
 				Main.toggleConfig();
